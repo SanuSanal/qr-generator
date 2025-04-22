@@ -25,17 +25,22 @@ const QRCodePage = () => {
 
     const handleVCFUpload = (e) => {
         const file = e?.target?.files?.[0];
-        if (file && file.name.endsWith(".vcf")) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                if (e.target.result.length > 4296) {
-                    alert("The text is too long for a QR code.");
-                    return;
-                }
-                setVcfText(e.target.result);
-                setText("");
-            };
-            reader.readAsText(file);
+        if (file) {
+            if (file.name.endsWith(".vcf")) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target.result.length > 4296) {
+                        alert("The text is too long for a QR code.");
+                        return;
+                    }
+                    setVcfText(e.target.result);
+                    setText("");
+                };
+                reader.readAsText(file);
+            }
+            else {
+                alert("Please upload a valid .vcf file.");
+            }
         }
     };
 
